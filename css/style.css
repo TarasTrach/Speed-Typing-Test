@@ -72,6 +72,55 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------------------*/
+@font-face {
+   font-family: Consolas;
+   src: url('/fonts/CONSOLA.TTF');
+   font-weight: normal;
+}
+
+@font-face {
+   font-family: ConsolasBold;
+   src: url('/fonts/CONSOLAB.TTF');
+   font-weight: bold;
+}
+
 body {
-  font-size: 10px;
+   background: linear-gradient(50deg, rgb(131, 131, 253), rgb(169, 107, 107));
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-family: Consolas, sans-serif;
+}
+
+.wrapper{
+   text-align: center;
+}
+
+#main_textarea{
+   border: 2px solid black;
+   background-color: rebeccapurple;
+}
+
+textarea{
+   resize: none;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------*/
+
+.header{
+   margin-bottom: 20px;
+   font-size: 20px;
+   font-family: ConsolasBold, sans-serif;
+}
+
+#startButton{
+   padding: 13px 20px;
+   background-color: rgb(150, 71, 186);
+   border-radius: 10%;
+   margin-top: 20px;
+}
+
+#startButton:hover{
+   background-color: rgb(166, 102, 196);
 }
