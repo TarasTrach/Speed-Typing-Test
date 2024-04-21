@@ -13,18 +13,25 @@
 </head>
 
 <body>
-   <div class="wrapper">
-      <header class="header">Speed Typing Test</header>
+   <template id="main-template">
+      <div class="wrapper">
+         <header class="header">Speed Typing Test</header>
 
-      <div class="textarea-container">
-         <div id="textarea-overlay">async function fetchData()</div>
-         <textarea id="textarea-main"></textarea>
+         <div class="textarea-container">
+            <div id="textarea-overlay">async function fetchData()</div>
+            <textarea id="textarea-main"></textarea>
+         </div>
+         <div class="stats">
+            <div>Mistakes: <p id="stats-mistakes">0</p>
+            </div>
+            <div>Accuracy: <p id="stats-accuracy">100%</p>
+            </div>
+         </div>
+
+         <button id="startButton">Start!</button>
+         <button id="newTestButton">New Test!</button>
       </div>
-
-      <button id="startButton">Start!</button>
-      <button id="checkButton">Check!</button>
-   </div>
-
+   </template>
 
    <!-- Script -->
    <script src="js/main.js"></script>

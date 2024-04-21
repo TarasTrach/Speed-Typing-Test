@@ -1,10 +1,24 @@
+const mainTemplate = document.querySelector('#main-template').content.cloneNode(true);
+document.addEventListener('DOMContentLoaded', document.body.appendChild(mainTemplate));
+
+const wrapper = document.querySelector('.wrapper');
 const header = document.querySelector('.header');
 const startButton = document.querySelector('#startButton');
+const newTestButton = document.querySelector("#newTestButton");
 const textArea = document.querySelector('#textarea-main');
 const textOverlay = document.querySelector('#textarea-overlay');
 
+const stats = document.querySelector('.stats');
+stats.style.display = 'none';
+newTestButton.hidden = true;
 
 startButton.addEventListener('click', startTest);
+newTestButton.addEventListener('click', newTest);
+
+document.addEventListener('paste', function (event) { // Заборона вставки
+   event.preventDefault();
+   return false;
+});
 
 const textArray = [
    "async function fetchData() {",
@@ -16,7 +30,37 @@ const textArray = [
    "        console.error('Error fetching data:', error);",
    "    }",
    "}"
-];
+]
+
+
+let timerInterval;
+function startTimer() {
+   let seconds = 0;
+   let minutes = 0;
+
+   const timerDisplay = header;
+
+   document.addEventListener('input', function () {
+      if (!timerInterval) {
+         timerInterval = setInterval(() => {
+            seconds++;
+
+            if (seconds === 60) {
+               seconds = 0;
+               minutes++;
+            }
+
+            const formattedTime = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+            timerDisplay.textContent = formattedTime;
+         }, 1000);
+      }
+   });
+   return timerInterval;
+}
+
+function stopTimer() {
+   clearInterval(timerInterval);
+}
 
 function checkAllInputs() {
    const allSpans = textOverlay.querySelectorAll('span');
@@ -52,28 +96,32 @@ function renderNewQuote() {
    });
 }
 
-
 function startTest() {
    textArea.value = '';
    header.innerHTML = 'Start typing..';
 
-   textArea.style.width = '700px';
-   textArea.style.height = '200px';
+   const initialWidth = 600;
+   const initialHeight = 200;
+   textArea.style.width = initialWidth + 'px';
+   const textLines = textArray.length;
+   const lineHeight = 23;
+   const maxHeight = 2000;
+   const requiredHeight = Math.min(maxHeight, textLines * lineHeight);
+   textArea.style.height = requiredHeight + 'px';
+
+   startButton.hidden = true;
+   stats.style.display = 'flex';
+
+   let mistakes = document.querySelector('#stats-mistakes');
+   let accuracy = document.querySelector('#stats-accuracy');
+
+   let totalCharacters = 0;
+   let correctCharacters = 0;
+   let mistakesCount = 0;
+   let accuracyPercentage = 100;
 
    renderNewQuote();
-
-   textArea.addEventListener('keydown', function (e) { // Табуляція
-      if (e.key === 'Tab') {
-         e.preventDefault();
-
-         let start = this.selectionStart;
-         let end = this.selectionEnd;
-         let value = this.value;
-
-         this.value = value.substring(0, start) + '    ' + value.substring(end);
-         this.selectionStart = this.selectionEnd = start + 4;
-      }
-   });
+   startTimer();
 
    textArea.addEventListener('input', function (e) { // Введення тексту
       const inputValue = e.data;
@@ -92,15 +140,49 @@ function startTest() {
          return;
       }
 
+      totalCharacters++;
+
       if (inputValue === charAtIndex.innerText) {
          charAtIndex.style.color = "rebeccapurple";
+         correctCharacters++;
       } else {
          charAtIndex.style.color = "red";
          charAtIndex.style.textDecoration = "underline";
+         mistakesCount++;
       }
+
+      mistakes.textContent = mistakesCount;
+      accuracyPercentage = (correctCharacters / totalCharacters * 100).toFixed(2);
+      accuracy.textContent = accuracyPercentage + '%';
 
       if (checkAllInputs()) {
+         textArea.style.border = '2px solid green';
+         textArea.readOnly = true;
+         stopTimer();
 
+         startButton.innerText = 'New test';
+         stats.insertBefore(header, stats.firstChild.nextSibling);
+         wrapper.insertBefore(newTestButton, wrapper.firstChild.nextSibling);
+         newTestButton.hidden = false;
       }
    });
+
+
+
+   textArea.addEventListener('keydown', function (e) {  // Табуляція
+      if (e.key === 'Tab') {
+         e.preventDefault();
+
+         let start = this.selectionStart;
+         let end = this.selectionEnd;
+         let value = this.value;
+
+         this.value = value.substring(0, start) + '    ' + value.substring(end);
+         this.selectionStart = this.selectionEnd = start + 4;
+      }
+   });
+}
+
+function newTest() {
+   location.reload();
 }

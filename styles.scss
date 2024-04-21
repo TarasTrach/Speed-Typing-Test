@@ -123,6 +123,8 @@ body {
    .hidden {
       opacity: 0;
    }
+
+   user-select: none;
 }
 
 .wrapper {
@@ -162,12 +164,23 @@ body {
       }
    }
 
+   .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 6%;
+      #stats-mistakes {
+      }
+
+      #stats-accuracy {
+      }
+   }
+
    #startButton,
-   #checkButton {
+   #newTestButton {
       padding: 13px 20px;
       background-color: $button-color;
       border-radius: 10%;
-      margin-top: 20px;
+      margin: 20px;
 
       &:hover {
          background-color: $button-hover-color;
