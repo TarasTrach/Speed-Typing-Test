@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-   <title>Speed Typing Test</title>
+   <title>Speed Typing Trainer</title>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <!-- Adaptive -->
@@ -14,27 +14,39 @@
 
 <body>
    <template id="main-template">
-      <div class="wrapper">
-         <header class="header">Speed Typing Test</header>
+      <div class="container">
+         <div class="main">
+            <header class="header">Speed Typing Trainer</header>
 
-         <div class="textarea-container">
-            <div id="textarea-overlay">async function fetchData()</div>
-            <textarea id="textarea-main"></textarea>
-         </div>
-         <div class="stats">
-            <div>Mistakes: <p id="stats-mistakes">0</p>
+            <div class="textarea-container">
+               <div id="textarea-overlay">async function fetchData()</div>
+               <textarea id="textarea-main"></textarea>
             </div>
-            <div>Accuracy: <p id="stats-accuracy">100%</p>
+            <div class="stats">
+               <div>Mistakes: <p id="stats-mistakes">0</p>
+               </div>
+               <div>Accuracy: <p id="stats-accuracy">100%</p>
+               </div>
             </div>
-         </div>
 
-         <button id="startButton">Start!</button>
-         <button id="newTestButton">New Test!</button>
+            <button id="startButton">Start!</button>
+            <button id="newTestButton">New Test!</button>
+         </div>
+         <form id="language-bar" action="#">
+            <input type="radio" name="language" id="JS" checked>
+            <label for="JS">JavaScript</label>
+
+            <input type="radio" name="language" id="c++">
+            <label for="c++">C++</label>
+
+            <input type="radio" name="language" id="python">
+            <label for="python">Python</label>
+         </form>
       </div>
    </template>
 
    <!-- Script -->
-   <script src="js/main.js"></script>
+   <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

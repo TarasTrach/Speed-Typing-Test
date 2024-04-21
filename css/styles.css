@@ -114,17 +114,22 @@ body .hidden {
   opacity: 0;
 }
 
-.wrapper {
-  text-align: center;
+.container {
+  display: flex;
 }
-.wrapper textarea {
+.container .main {
+  text-align: center;
+  flex-grow: 1;
+  margin-right: 10%;
+}
+.container .main textarea {
   resize: none;
 }
-.wrapper .textarea-container {
+.container .main .textarea-container {
   position: relative;
   font-size: 15px;
 }
-.wrapper .textarea-container #textarea-overlay {
+.container .main .textarea-container #textarea-overlay {
   text-align: left;
   font-size: 15px;
   position: absolute;
@@ -140,7 +145,7 @@ body .hidden {
        tab-size: 4;
   line-height: 20px;
 }
-.wrapper .textarea-container #textarea-main {
+.container .main .textarea-container #textarea-main {
   font-size: 15px;
   border: 2px solid black;
   background-color: rebeccapurple;
@@ -149,21 +154,48 @@ body .hidden {
   padding: 5px;
   line-height: 20px;
 }
-.wrapper .stats {
+.container .main .stats {
   display: flex;
   justify-content: space-around;
   margin-top: 6%;
 }
-.wrapper #startButton,
-.wrapper #newTestButton {
+.container .main #startButton,
+.container .main #newTestButton {
   padding: 13px 20px;
   background-color: rgb(150, 71, 186);
   border-radius: 10%;
   margin: 20px;
+  transition: background-color 0.2s ease;
 }
-.wrapper #startButton:hover,
-.wrapper #newTestButton:hover {
+.container .main #startButton:hover,
+.container .main #newTestButton:hover {
   background-color: rgb(166, 102, 196);
+}
+.container #language-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15%;
+  gap: 10px;
+}
+.container #language-bar input[type=radio] {
+  display: none;
+}
+.container #language-bar label {
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: rgb(131, 131, 253);
+  color: rgb(235, 235, 235);
+  font-size: 16px;
+  transition: background-color 0.4s ease;
+}
+.container #language-bar input[type=radio]:checked + label {
+  background-color: rgb(169, 107, 107);
+}
+.container #language-bar label:hover {
+  background-color: #555;
 }
 
 .header {

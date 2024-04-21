@@ -127,63 +127,99 @@ body {
    user-select: none;
 }
 
-.wrapper {
-   text-align: center;
-
-   textarea {
-      resize: none;
-   }
-
-   .textarea-container {
-      position: relative;
-      font-size: 15px;
-
-      #textarea-overlay {
-         text-align: left;
-         font-size: 15px;
-         position: absolute;
-         top: 0.35vh;
-         left: 0.3vh;
-         pointer-events: none;
-         color: $text-overlay-color;
-         opacity: 0.3;
-         padding: 5px;
-         white-space: pre-wrap;
-         tab-size: 4;
-         line-height: 20px;
+.container {
+   display: flex;
+   .main {
+      text-align: center;
+      flex-grow: 1;
+      margin-right: 10%;
+      textarea {
+         resize: none;
       }
 
-      #textarea-main {
+      .textarea-container {
+         position: relative;
          font-size: 15px;
-         border: 2px solid black;
-         background-color: $textarea-background-color;
-         width: 300px;
-         height: 100px;
-         padding: 5px;
-         line-height: 20px;
+
+         #textarea-overlay {
+            text-align: left;
+            font-size: 15px;
+            position: absolute;
+            top: 0.35vh;
+            left: 0.3vh;
+            pointer-events: none;
+            color: $text-overlay-color;
+            opacity: 0.3;
+            padding: 5px;
+            white-space: pre-wrap;
+            tab-size: 4;
+            line-height: 20px;
+         }
+
+         #textarea-main {
+            font-size: 15px;
+            border: 2px solid black;
+            background-color: $textarea-background-color;
+            width: 300px;
+            height: 100px;
+            padding: 5px;
+            line-height: 20px;
+         }
+      }
+
+      .stats {
+         display: flex;
+         justify-content: space-around;
+         margin-top: 6%;
+         #stats-mistakes {
+         }
+
+         #stats-accuracy {
+         }
+      }
+
+      #startButton,
+      #newTestButton {
+         padding: 13px 20px;
+         background-color: $button-color;
+         border-radius: 10%;
+         margin: 20px;
+         transition: background-color 0.2s ease;
+
+         &:hover {
+            background-color: $button-hover-color;
+         }
       }
    }
 
-   .stats {
+   #language-bar {
       display: flex;
-      justify-content: space-around;
-      margin-top: 6%;
-      #stats-mistakes {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15%;
+      gap: 10px;
+
+      input[type="radio"] {
+         display: none;
       }
 
-      #stats-accuracy {
+      label {
+         cursor: pointer;
+         padding: 10px 20px;
+         border-radius: 20px;
+         background-color: rgb(131, 131, 253);
+         color: rgb(235, 235, 235);
+         font-size: 16px;
+         transition: background-color 0.4s ease;
       }
-   }
 
-   #startButton,
-   #newTestButton {
-      padding: 13px 20px;
-      background-color: $button-color;
-      border-radius: 10%;
-      margin: 20px;
+      input[type="radio"]:checked + label {
+         background-color: rgb(169, 107, 107);
+      }
 
-      &:hover {
-         background-color: $button-hover-color;
+      label:hover {
+         background-color: #555;
       }
    }
 }

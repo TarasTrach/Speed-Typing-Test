@@ -1,14 +1,18 @@
+import { textOptions } from './texts.js';
+
 const mainTemplate = document.querySelector('#main-template').content.cloneNode(true);
 document.addEventListener('DOMContentLoaded', document.body.appendChild(mainTemplate));
 
-const wrapper = document.querySelector('.wrapper');
+const main = document.querySelector('.main');
 const header = document.querySelector('.header');
 const startButton = document.querySelector('#startButton');
 const newTestButton = document.querySelector("#newTestButton");
 const textArea = document.querySelector('#textarea-main');
 const textOverlay = document.querySelector('#textarea-overlay');
+const languageRadios = document.querySelectorAll('input[name="language"]');
 
 const stats = document.querySelector('.stats');
+const languageBar = document.querySelector('#language-bar');
 stats.style.display = 'none';
 newTestButton.hidden = true;
 
@@ -19,19 +23,6 @@ document.addEventListener('paste', function (event) { // Заборона вст
    event.preventDefault();
    return false;
 });
-
-const textArray = [
-   "async function fetchData() {",
-   "    try {",
-   "        const response = await fetch('https://example.com/data');",
-   "        const data = await response.json();",
-   "        console.log(data);",
-   "    } catch (error) {",
-   "        console.error('Error fetching data:', error);",
-   "    }",
-   "}"
-]
-
 
 let timerInterval;
 function startTimer() {
@@ -82,7 +73,7 @@ function getCursorPosition(textarea) {
    return lineNumber;
 }
 
-function renderNewQuote() {
+function renderNewQuote(textArray) {
    textOverlay.innerHTML = '';
 
    textArray.forEach(line => {
@@ -96,12 +87,32 @@ function renderNewQuote() {
    });
 }
 
+function newTest() {
+   location.reload();
+}
+
+function checkSelectedLanguage() {
+   let selectedLanguage = "";
+   languageRadios.forEach(radio => {
+      if (radio.checked) selectedLanguage = radio.id;
+   });
+   return selectedLanguage;
+}
+
+function getRandomText(selectedLanguage) {
+   const selectedTextOptions = textOptions.filter(option => option.type === selectedLanguage);
+   const randomIndex = Math.floor(Math.random() * selectedTextOptions.length);
+   const randomText = selectedTextOptions[randomIndex].text;
+   return randomText;
+}
+
 function startTest() {
    textArea.value = '';
    header.innerHTML = 'Start typing..';
+   const selectedLanguage = checkSelectedLanguage();
+   const textArray = getRandomText(selectedLanguage);
 
    const initialWidth = 600;
-   const initialHeight = 200;
    textArea.style.width = initialWidth + 'px';
    const textLines = textArray.length;
    const lineHeight = 23;
@@ -111,6 +122,7 @@ function startTest() {
 
    startButton.hidden = true;
    stats.style.display = 'flex';
+   languageBar.style.display = 'none';
 
    let mistakes = document.querySelector('#stats-mistakes');
    let accuracy = document.querySelector('#stats-accuracy');
@@ -120,7 +132,7 @@ function startTest() {
    let mistakesCount = 0;
    let accuracyPercentage = 100;
 
-   renderNewQuote();
+   renderNewQuote(textArray);
    startTimer();
 
    textArea.addEventListener('input', function (e) { // Введення тексту
@@ -162,12 +174,10 @@ function startTest() {
 
          startButton.innerText = 'New test';
          stats.insertBefore(header, stats.firstChild.nextSibling);
-         wrapper.insertBefore(newTestButton, wrapper.firstChild.nextSibling);
+         main.insertBefore(newTestButton, main.firstChild.nextSibling);
          newTestButton.hidden = false;
       }
    });
-
-
 
    textArea.addEventListener('keydown', function (e) {  // Табуляція
       if (e.key === 'Tab') {
@@ -181,8 +191,4 @@ function startTest() {
          this.selectionStart = this.selectionEnd = start + 4;
       }
    });
-}
-
-function newTest() {
-   location.reload();
 }
