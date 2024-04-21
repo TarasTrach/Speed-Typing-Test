@@ -146,7 +146,7 @@ function startTest() {
 
       if (!inputValue || !charAtIndex) {
          if (nextChar) {
-            nextChar.style.color = '#999';
+            nextChar.style.color = '#cccccc';
             nextChar.style.textDecoration = 'none';
          }
          return;

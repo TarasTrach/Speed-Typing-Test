@@ -136,7 +136,7 @@ body .hidden {
   top: 0.35vh;
   left: 0.3vh;
   pointer-events: none;
-  color: #999;
+  color: #cccccc;
   opacity: 0.3;
   padding: 5px;
   white-space: pre-wrap;
