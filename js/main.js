@@ -18,12 +18,25 @@ const textArray = [
    "}"
 ];
 
+function checkAllInputs() {
+   const allSpans = textOverlay.querySelectorAll('span');
+   let isCorrect = true;
+
+   allSpans.forEach(span => {
+      const index = Array.from(span.parentNode.children).indexOf(span);
+      const inputValue = textArea.value[index];
+
+      if (inputValue !== span.innerText) isCorrect = false;
+   });
+
+   return isCorrect;
+}
+
 function getCursorPosition(textarea) {
    const textBeforeCursor = textarea.value.substring(0, textarea.selectionStart);
    const lineNumber = textBeforeCursor.split('\n').length;
    return lineNumber;
 }
-
 
 function renderNewQuote() {
    textOverlay.innerHTML = '';
@@ -62,22 +75,32 @@ function startTest() {
       }
    });
 
-   textArea.addEventListener('input', function (e) {
+   textArea.addEventListener('input', function (e) { // Введення тексту
       const inputValue = e.data;
       let cursorPosition = this.selectionStart;
       const linePosition = getCursorPosition(textArea);
 
       const allSpans = textOverlay.querySelectorAll('span');
       const charAtIndex = allSpans[cursorPosition - linePosition];
-      console.log(linePosition);
+      const nextChar = allSpans[cursorPosition - linePosition + 1];
 
-      if (!inputValue || !charAtIndex) return;
+      if (!inputValue || !charAtIndex) {
+         if (nextChar) {
+            nextChar.style.color = '#999';
+            nextChar.style.textDecoration = 'none';
+         }
+         return;
+      }
 
       if (inputValue === charAtIndex.innerText) {
          charAtIndex.style.color = "rebeccapurple";
       } else {
          charAtIndex.style.color = "red";
          charAtIndex.style.textDecoration = "underline";
+      }
+
+      if (checkAllInputs()) {
+
       }
    });
 }
