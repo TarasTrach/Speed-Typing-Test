@@ -136,7 +136,7 @@ body .hidden {
   top: 0.35vh;
   left: 0.3vh;
   pointer-events: none;
-  color: #cccccc;
+  color: #dddddd;
   opacity: 0.3;
   padding: 5px;
   white-space: pre-wrap;
@@ -148,7 +148,7 @@ body .hidden {
 .container .main .textarea-container #textarea-main {
   font-size: 15px;
   border: 2px solid black;
-  background-color: rebeccapurple;
+  background-color: rgb(91, 44, 138);
   width: 300px;
   height: 100px;
   padding: 5px;

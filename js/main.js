@@ -93,13 +93,13 @@ function resetTextStyle() {
          textAreaValue = textArea.value[textAreaIndex]
       }
       if (textAreaValue && span === textAreaValue) {
-         allSpans[index].style.color = 'rebeccapurple';
+         allSpans[index].style.color = 'rgb(91, 44, 138)';
          allSpans[index].style.textDecoration = 'none';
       } else if (textAreaValue) {
          allSpans[index].style.color = 'red';
          allSpans[index].style.textDecoration = 'underline';
       } else {
-         allSpans[index].style.color = '#cccccc';
+         allSpans[index].style.color = '#dddddd';
          allSpans[index].style.textDecoration = 'none';
       }
       textAreaIndex++;
