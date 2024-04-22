@@ -177,7 +177,7 @@ function startTest() {
 
       resetTextStyle();
 
-      if (inputValue !== charAtIndex.innerText) mistakesCount++;
+      if (inputValue !== charAtIndex.innerText && e.inputType !== 'deleteContentBackward') mistakesCount++;
 
       const totalCorrectCharacters = totalCharacters - mistakesCount;
       accuracyPercentage = (totalCorrectCharacters / totalCharacters) * 100;
