@@ -67,10 +67,43 @@ function checkAllInputs() {
    return isCorrect;
 }
 
-function getCursorPosition(textarea) {
+function getTotalCharacters(arrayOfStrings) {
+   let totalCharacters = 0;
+   for (let i = 0; i < arrayOfStrings.length; i++)
+      totalCharacters += arrayOfStrings[i].length;
+   return totalCharacters;
+}
+
+function getLineNumber(textarea) {
    const textBeforeCursor = textarea.value.substring(0, textarea.selectionStart);
    const lineNumber = textBeforeCursor.split('\n').length;
    return lineNumber;
+}
+
+function resetTextStyle() {
+   const allSpans = document.querySelectorAll('span');
+   let textAreaIndex = 0;
+
+   for (let index = 0; index < allSpans.length; index++) {
+      let textAreaValue = textArea.value[textAreaIndex];
+      const span = allSpans[index].innerText;
+
+      if (textAreaValue === '\n') {
+         textAreaIndex++;
+         textAreaValue = textArea.value[textAreaIndex]
+      }
+      if (textAreaValue && span === textAreaValue) {
+         allSpans[index].style.color = 'rebeccapurple';
+         allSpans[index].style.textDecoration = 'none';
+      } else if (textAreaValue) {
+         allSpans[index].style.color = 'red';
+         allSpans[index].style.textDecoration = 'underline';
+      } else {
+         allSpans[index].style.color = '#cccccc';
+         allSpans[index].style.textDecoration = 'none';
+      }
+      textAreaIndex++;
+   }
 }
 
 function renderNewQuote(textArray) {
@@ -111,6 +144,7 @@ function startTest() {
    header.innerHTML = 'Start typing..';
    const selectedLanguage = checkSelectedLanguage();
    const textArray = getRandomText(selectedLanguage);
+   const totalCharacters = getTotalCharacters(textArray);
 
    const initialWidth = 600;
    textArea.style.width = initialWidth + 'px';
@@ -127,8 +161,6 @@ function startTest() {
    let mistakes = document.querySelector('#stats-mistakes');
    let accuracy = document.querySelector('#stats-accuracy');
 
-   let totalCharacters = 0;
-   let correctCharacters = 0;
    let mistakesCount = 0;
    let accuracyPercentage = 100;
 
@@ -138,36 +170,22 @@ function startTest() {
    textArea.addEventListener('input', function (e) { // Введення тексту
       const inputValue = e.data;
       let cursorPosition = this.selectionStart;
-      const linePosition = getCursorPosition(textArea);
+      const linePosition = getLineNumber(textArea);
 
       const allSpans = textOverlay.querySelectorAll('span');
       const charAtIndex = allSpans[cursorPosition - linePosition];
-      const nextChar = allSpans[cursorPosition - linePosition + 1];
 
-      if (!inputValue || !charAtIndex) {
-         if (nextChar) {
-            nextChar.style.color = '#cccccc';
-            nextChar.style.textDecoration = 'none';
-         }
-         return;
-      }
+      resetTextStyle();
 
-      totalCharacters++;
+      if (inputValue !== charAtIndex.innerText) mistakesCount++;
 
-      if (inputValue === charAtIndex.innerText) {
-         charAtIndex.style.color = "rebeccapurple";
-         correctCharacters++;
-      } else {
-         charAtIndex.style.color = "red";
-         charAtIndex.style.textDecoration = "underline";
-         mistakesCount++;
-      }
+      const totalCorrectCharacters = totalCharacters - mistakesCount;
+      accuracyPercentage = (totalCorrectCharacters / totalCharacters) * 100;
 
       mistakes.textContent = mistakesCount;
-      accuracyPercentage = (correctCharacters / totalCharacters * 100).toFixed(2);
-      accuracy.textContent = accuracyPercentage + '%';
+      accuracy.textContent = accuracyPercentage.toFixed(2) + '%';
 
-      if (checkAllInputs()) {
+      if (checkAllInputs()) { // Win case
          textArea.style.border = '2px solid green';
          textArea.readOnly = true;
          stopTimer();
