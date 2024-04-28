@@ -1,25 +1,40 @@
 import { textOptions } from './texts.js';
 
-const mainTemplate = document.querySelector('#main-template').content.cloneNode(true);
-document.addEventListener('DOMContentLoaded', document.body.appendChild(mainTemplate));
+const SELECTORS = {
+   MAIN_TEMPLATE: '#main-template',
+   MAIN: '.main',
+   HEADER: '.header',
+   START_BUTTON: '#startButton',
+   NEW_TEST_BUTTON: '#newTestButton',
+   TEXT_AREA: '#textarea-main',
+   TEXT_OVERLAY: '#textarea-overlay',
+   LANGUAGE_RADIOS: 'input[name="language"]',
+   STATS: '.stats',
+   LANGUAGE_BAR: '#language-bar',
+ };
 
-const main = document.querySelector('.main');
-const header = document.querySelector('.header');
-const startButton = document.querySelector('#startButton');
-const newTestButton = document.querySelector("#newTestButton");
-const textArea = document.querySelector('#textarea-main');
-const textOverlay = document.querySelector('#textarea-overlay');
-const languageRadios = document.querySelectorAll('input[name="language"]');
+const { querySelector, querySelectorAll, addEventListener } = document;
 
-const stats = document.querySelector('.stats');
-const languageBar = document.querySelector('#language-bar');
+const mainTemplate = querySelector(SELECTORS.MAIN_TEMPLATE).content.cloneNode(true);
+addEventListener('DOMContentLoaded', () => document.body.appendChild(mainTemplate));
+
+const main = querySelector(SELECTORS.MAIN);
+const header = querySelector(SELECTORS.HEADER);
+const startButton = querySelector(SELECTORS.START_BUTTON);
+const newTestButton = querySelector(SELECTORS.NEW_TEST_BUTTON);
+const textArea = querySelector(SELECTORS.TEXT_AREA);
+const textOverlay = querySelector(SELECTORS.TEXT_OVERLAY);
+const languageRadios = querySelectorAll(SELECTORS.LANGUAGE_RADIOS);
+
+const stats = querySelector(SELECTORS.STATS);
+const languageBar = querySelector(SELECTORS.LANGUAGE_BAR);
 stats.style.display = 'none';
 newTestButton.hidden = true;
 
 startButton.addEventListener('click', startTest);
 newTestButton.addEventListener('click', newTest);
 
-document.addEventListener('paste', function (event) { // Заборона вставки
+addEventListener('paste', function (event) { // Заборона вставки
    event.preventDefault();
    return false;
 });

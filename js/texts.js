@@ -121,6 +121,19 @@ export const textOptions = [
       ]
    },
    {
+      type: "JS",
+      text: [
+         "app.get('/api/customers', (req, res) => {",
+         "    try {",
+         "        const customers = getAllCustomers();",
+         "        res.status(200).json({ customers });",
+         "    } catch (e) {",
+         "        res.status(500).json({ error: e.message });",
+         "    }",
+         "});"
+      ],
+   },
+   {
       type: "c++",
       text: [
          "void bubbleSort(int arr[], int n) {",
