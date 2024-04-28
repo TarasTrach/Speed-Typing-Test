@@ -13,28 +13,26 @@ const SELECTORS = {
    LANGUAGE_BAR: '#language-bar',
  };
 
-const { querySelector, querySelectorAll, addEventListener } = document;
+const mainTemplate = document.querySelector('#main-template').content.cloneNode(true);
+document.addEventListener('DOMContentLoaded', document.body.appendChild(mainTemplate));
 
-const mainTemplate = querySelector(SELECTORS.MAIN_TEMPLATE).content.cloneNode(true);
-addEventListener('DOMContentLoaded', () => document.body.appendChild(mainTemplate));
+const main = document.querySelector(SELECTORS.MAIN);
+const header = document.querySelector(SELECTORS.HEADER);
+const startButton = document.querySelector(SELECTORS.START_BUTTON);
+const newTestButton = document.querySelector(SELECTORS.NEW_TEST_BUTTON);
+const textArea = document.querySelector(SELECTORS.TEXT_AREA);
+const textOverlay = document.querySelector(SELECTORS.TEXT_OVERLAY);
+const languageRadios = document.querySelectorAll(SELECTORS.LANGUAGE_RADIOS);
 
-const main = querySelector(SELECTORS.MAIN);
-const header = querySelector(SELECTORS.HEADER);
-const startButton = querySelector(SELECTORS.START_BUTTON);
-const newTestButton = querySelector(SELECTORS.NEW_TEST_BUTTON);
-const textArea = querySelector(SELECTORS.TEXT_AREA);
-const textOverlay = querySelector(SELECTORS.TEXT_OVERLAY);
-const languageRadios = querySelectorAll(SELECTORS.LANGUAGE_RADIOS);
-
-const stats = querySelector(SELECTORS.STATS);
-const languageBar = querySelector(SELECTORS.LANGUAGE_BAR);
+const stats = document.querySelector('.stats');
+const languageBar = document.querySelector('#language-bar');
 stats.style.display = 'none';
 newTestButton.hidden = true;
 
 startButton.addEventListener('click', startTest);
 newTestButton.addEventListener('click', newTest);
 
-addEventListener('paste', function (event) { // Заборона вставки
+document.addEventListener('paste', function (event) { // Заборона вставки
    event.preventDefault();
    return false;
 });
