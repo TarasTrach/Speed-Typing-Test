@@ -100,7 +100,6 @@ h6 {
    font-weight: bold;
 }
 /*---------------------------------------MAIN-----------------------------------------------------------------------------------------*/
-
 // Primary colors
 $textarea-background-color: rgb(91, 44, 138);
 $background-main-color: linear-gradient(50deg, rgb(131, 131, 253), rgb(169, 107, 107));
@@ -111,6 +110,15 @@ $button-hover-color: rgb(166, 102, 196);
 $text-color: #000;
 $text-overlay-color: #dddddd;
 $text-error-color: red;
+
+// Base
+$base-font-size: 1rem;
+$base-transition: 0.2s ease;
+$base-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+// Responsive design
+$breakpoint-tablet: 768px;
+$breakpoint-mobile: 480px;
 
 body {
    background: $background-main-color;
@@ -129,21 +137,38 @@ body {
 
 .container {
    display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   @media (min-width: $breakpoint-tablet) {
+      flex-direction: row;
+   }
    .main {
       text-align: center;
       flex-grow: 1;
-      margin-right: 10%;
+      margin: 10% 0;
+
+      @media (min-width: $breakpoint-tablet) {
+         margin-right: 10%;
+      }
       textarea {
          resize: none;
+         font-size: $base-font-size;
+         transition: all $base-transition;
+         box-shadow: $base-box-shadow;
+         &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+         }
       }
 
       .textarea-container {
          position: relative;
-         font-size: 15px;
+         font-size: $base-font-size;
 
          #textarea-overlay {
             text-align: left;
-            font-size: 15px;
+            font-size: $base-font-size;
             position: absolute;
             top: 0.35vh;
             left: 0.3vh;
@@ -157,7 +182,7 @@ body {
          }
 
          #textarea-main {
-            font-size: 15px;
+            font-size: $base-font-size;
             border: 2px solid black;
             background-color: $textarea-background-color;
             width: 300px;
@@ -184,7 +209,7 @@ body {
          background-color: $button-color;
          border-radius: 10%;
          margin: 20px;
-         transition: background-color 0.2s ease;
+         transition: background-color $base-transition;
 
          &:hover {
             background-color: $button-hover-color;
@@ -199,6 +224,13 @@ body {
       align-items: center;
       margin-bottom: 15%;
       gap: 10px;
+      width: 90%;
+      margin-bottom: 10%;
+
+      @media (min-width: $breakpoint-tablet) {
+         width: auto;
+         margin-bottom: 15%;
+      }
 
       input[type="radio"] {
          display: none;
@@ -206,26 +238,34 @@ body {
 
       label {
          cursor: pointer;
-         padding: 10px 20px;
-         border-radius: 20px;
-         background-color: rgb(131, 131, 253);
-         color: rgb(235, 235, 235);
-         font-size: 16px;
+         padding: 0.625rem 1.25rem;
+         border-radius: 1.25rem;
+         background-color: #8383fd;
+         color: #ebebeb;
+         font-size: $base-font-size;
          transition: background-color 0.4s ease;
-      }
-
-      input[type="radio"]:checked + label {
-         background-color: rgb(169, 107, 107);
-      }
-
-      label:hover {
+         box-shadow: $base-box-shadow;
+     }
+     
+     input[type="radio"]:checked + label {
+         background-color: #a96b6b;
+     }
+     
+     label:hover {
          background-color: #555;
-      }
+         transform: scale(1.02);
+         transition: transform $base-transition;
+     }
    }
 }
 
 .header {
-   margin-bottom: 20px;
-   font-size: 20px;
+   margin-bottom: 2rem;
+   font-size: 1.25rem;
    font-family: ConsolasBold, sans-serif;
+
+   @media (min-width: $breakpoint-tablet) {
+      margin-bottom: 20px;
+      font-size: 20px;
+   }
 }
